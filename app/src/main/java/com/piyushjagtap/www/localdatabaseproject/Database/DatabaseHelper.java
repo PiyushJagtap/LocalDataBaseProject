@@ -2,9 +2,15 @@ package com.piyushjagtap.www.localdatabaseproject.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.piyushjagtap.www.localdatabaseproject.NoteModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static String TAG = "DatabaseHelper";
@@ -62,4 +68,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //return newly inserted row id
         return id;
     }
-}
+
+    public List<NoteModel> getAllNotes(){
+        List<NoteModel> notes = new ArrayList<>();
+
+        //select all query
+        String selectQuery = "SELECT * FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+
+        //looping through all rows and adding to list
+        if (cursor.moveToFirst()){
+            do {
+                NoteModel noteModel = new NoteModel();
+            noteModel.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
+            noteModel.setNote(cursor.getString(cursor.getColumnIndex(COLUMN_NOTE)));
+            noteModel.setTimestamp(cursor.getString(cursor.getColumnIndex(COLUMN_TIMESTAMP)));
+
+            notes.add(noteModel);
+            }while (cursor.moveToNext());
+
+            }
+            //close db connection
+        db.close();
+        return notes;
+        }
+
+        public int updateNote(NoteModel noteModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+            String note2 = "My Second Note";
+        String UPDATE = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NOTE + " = " + note2 + " WHERE " + COLUMN_ID + " = " + noteModel.getId();
+        db.execSQL(UPDATE);
+// ContentValues contentValues = new ContentValues();
+//        contentValues.put(COLUMN_NOTE,note2);
+//
+//        //updating row
+//            return db.update(TABLE_NAME,contentValues,COLUMN_ID + " = ?",
+//                    new String[]{String.valueOf(noteModel.getId())});
+            return 0;
+        }
+    }
+
