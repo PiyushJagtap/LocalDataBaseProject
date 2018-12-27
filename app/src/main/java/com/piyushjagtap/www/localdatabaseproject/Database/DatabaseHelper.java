@@ -98,15 +98,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public int updateNote(NoteModel noteModel){
         SQLiteDatabase db = this.getWritableDatabase();
             String note2 = "My Second Note";
-        String UPDATE = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NOTE + " = " + note2 + " WHERE " + COLUMN_ID + " = " + noteModel.getId();
-        db.execSQL(UPDATE);
+        String UPDATE_TABLE = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NOTE + " = '" + note2 + "' WHERE " + COLUMN_ID + " = " + noteModel.getId();
+        db.execSQL(UPDATE_TABLE);
 // ContentValues contentValues = new ContentValues();
 //        contentValues.put(COLUMN_NOTE,note2);
 //
 //        //updating row
 //            return db.update(TABLE_NAME,contentValues,COLUMN_ID + " = ?",
 //                    new String[]{String.valueOf(noteModel.getId())});
+            db.close();
             return 0;
+        }
+
+        public int deleteNote(NoteModel noteModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String DELETE_TABLE = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = " + noteModel.getId();
+        db.execSQL(DELETE_TABLE);
+        db.close();
+        return 0;
         }
     }
 

@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button dataButton;
     Button getDataButton;
     Button updateDataButton;
+    Button deleteDataButton;
     List<NoteModel> getNoteAL;
 
     @Override
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getDataButton.setOnClickListener(this);
         updateDataButton = findViewById(R.id.update_data_button);
         updateDataButton.setOnClickListener(this);
+        deleteDataButton = findViewById(R.id.delete_data_button);
+        deleteDataButton.setOnClickListener(this);
 
     }
 
@@ -55,12 +58,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "ArrayList Size : " + getNoteAL.size());
                 break;
 
+            //Case of button to update from table
             case R.id.update_data_button:
                 if (db == null)
                     db = new DatabaseHelper(this);
-
                 NoteModel noteModel = getNoteAL.get(2);
-                db.updateNote(noteModel);
+                long update = db.updateNote(noteModel);
+                Log.d(TAG, "Data Updated: " + update);
+                break;
+
+                //Case of button to delete from table
+            case R.id.delete_data_button:
+                if (db == null)
+                    db = new DatabaseHelper(this);
+                NoteModel noteModel1 = getNoteAL.get(2);
+                long delete = db.deleteNote(noteModel1);
+                Log.d(TAG, "Data Delete : " + delete);
                 break;
         }
     }
