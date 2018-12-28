@@ -69,8 +69,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public List<NoteModel> getAllNotes(){
-        List<NoteModel> notes = new ArrayList<>();
+    public ArrayList<NoteModel> getAllNotes(){
+        ArrayList<NoteModel> notes = new ArrayList<>();
 
         //select all query
         String selectQuery = "SELECT * FROM " + TABLE_NAME;

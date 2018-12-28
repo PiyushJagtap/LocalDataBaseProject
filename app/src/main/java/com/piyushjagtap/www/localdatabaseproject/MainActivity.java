@@ -13,7 +13,7 @@ import com.piyushjagtap.www.localdatabaseproject.Database.DatabaseHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener , NoteCallBackListener {
 
     private static String TAG = "MainActivity";
     private DatabaseHelper db;
@@ -63,7 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.get_data_button:
                 if (db == null)
                     db = new DatabaseHelper(this);
-                getNoteAL = db.getAllNotes();
+//                GetCustomerDataAsyncTask getCustomerDataAsyncTask1 = new GetCustomerDataAsyncTask(this);
+//                getCustomerDataAsyncTask1.execute();
+                  getNoteAL = db.getAllNotes();
                 Log.d(TAG, "ArrayList Size : " + getNoteAL.size());
                 break;
 
@@ -87,9 +89,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //Case of button for Async Task
             case R.id.async_button:
-                GetCustomerDataAsyncTask getCustomerDataAsyncTask = new GetCustomerDataAsyncTask();
-                getCustomerDataAsyncTask.execute("My First Async Task.");
+                GetCustomerDataAsyncTask getCustomerDataAsyncTask = new GetCustomerDataAsyncTask(this);
+                getCustomerDataAsyncTask.setNoteCallBackListener(this);
+                getCustomerDataAsyncTask.execute();
                 break;
         }
+    }
+
+    @Override
+    public void getCustomerList(ArrayList<NoteModel> noteModelArrayList) {
+        Log.d(TAG, "getCustomerList: " + noteModelArrayList.size());
     }
 }
