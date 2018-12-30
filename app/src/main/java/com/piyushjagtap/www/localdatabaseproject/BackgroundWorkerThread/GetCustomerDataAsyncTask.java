@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.piyushjagtap.www.localdatabaseproject.Database.DatabaseHelper;
 import com.piyushjagtap.www.localdatabaseproject.MainActivity;
+import com.piyushjagtap.www.localdatabaseproject.NoteCallBackListener;
 import com.piyushjagtap.www.localdatabaseproject.NoteModel;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class GetCustomerDataAsyncTask extends AsyncTask<Void, Void, ArrayList<No
     private DatabaseHelper db;
     ArrayList<NoteModel> noteModelList;
     private Context context;
-    private MainActivity listener;
+    private NoteCallBackListener listener;
 
 
     public GetCustomerDataAsyncTask(Context c){
@@ -46,8 +47,8 @@ public class GetCustomerDataAsyncTask extends AsyncTask<Void, Void, ArrayList<No
             listener.getCustomerList(noteModels);
     }
 
-    public void setNoteCallBackListener(MainActivity mainActivity) {
-        this.listener = mainActivity;
+    public void setNoteCallBackListener(NoteCallBackListener listener) {
+        this.listener = listener;
     }
 
     //    @Override
