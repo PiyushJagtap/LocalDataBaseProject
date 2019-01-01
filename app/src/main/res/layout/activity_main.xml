@@ -41,5 +41,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start Async Task"/>
+    <Button
+        android:id="@+id/camera_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Camera Permission"/>
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
 
 </LinearLayout>
